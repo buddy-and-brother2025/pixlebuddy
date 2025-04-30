@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>PIXLE BUDDY</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: #2C5693;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background: #fff;
+      padding: 40px 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+      text-align: center;
+      width: 360px;
+      max-width: 90%;
+    }
+    h1 {
+      font-family: 'Bebas Neue', cursive;
+      font-size: 36px;
+      letter-spacing: 4px;
+      margin: 0;
+      color: #2C5693;
+    }
+    h2 {
+      font-size: 14px;
+      color: #888;
+      margin-top: 5px;
+      margin-bottom: 30px;
+      letter-spacing: 1px;
+    }
+    label {
+      display: block;
+      margin: 15px 0 5px;
+      font-size: 14px;
+      color: #333;
+      text-align: left;
+    }
+    .input-group {
+      width: 100%;
+      margin-bottom: 20px;
+    }
+    input[type="number"] {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #2C5693;
+      border-radius: 8px;
+      font-size: 16px;
+      background-color: #f9f9f9;
+      color: #333;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    input:focus {
+      outline: none;
+      border-color: #FFD700;
+    }
+    input[readonly] {
+      background-color: #eee;
+    }
+    .clear-button {
+      background-color: transparent;
+      border: 2px solid #2C5693;
+      color: #2C5693;
+      padding: 6px 20px;
+      font-size: 0.9rem;
+      border-radius: 20px;
+      margin-top: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .clear-button:hover {
+      background-color: #2C5693;
+      color: white;
+    }
+    .credit {
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.8rem;
+      color: #2C5693;
+      letter-spacing: 2px;
+      margin-top: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>PIXLE BUDDY</h1>
+    <h2>mm & px 変換ツール</h2>
+
+    <label>DPI（解像度）:</label>
+    <div class="input-group">
+      <input type="number" id="dpi" value="300" oninput="updateAll()">
+    </div>
+
+    <label>幅（mm）:</label>
+    <div class="input-group">
+      <input type="number" id="widthMm" oninput="mmToPx('width')">
+    </div>
+
+    <label>幅（px）:</label>
+    <div class="input-group">
+      <input type="number" id="widthPx" oninput="pxToMm('width')">
+    </div>
+
+    <label>高さ（mm）:</label>
+    <div class="input-group">
+      <input type="number" id="heightMm" oninput="mmToPx('height')">
+    </div>
+
+    <label>高さ（px）:</label>
+    <div class="input-group">
+      <input type="number" id="heightPx" oninput="pxToMm('height')">
+    </div>
+
+    <button class="clear-button" onclick="clearAll()">CLEAR</button>
+
+    <div class="credit">
+      Made by Buddy & Brother.
+    </div>
+  </div>
+
+  <script>
+    function mmToPx(dim) {
+      const dpi = parseFloat(document.getElementById('dpi').value);
+      if (dim === 'width') {
+        const mm = parseFloat(document.getElementById('widthMm').value);
+        document.getElementById('widthPx').value = isNaN(mm) ? '' : Math.round(mm * dpi / 25.4);
+      } else {
+        const mm = parseFloat(document.getElementById('heightMm').value);
+        document.getElementById('heightPx').value = isNaN(mm) ? '' : Math.round(mm * dpi / 25.4);
+      }
+    }
+
+    function pxToMm(dim) {
+      const dpi = parseFloat(document.getElementById('dpi').value);
+      if (dim === 'width') {
+        const px = parseFloat(document.getElementById('widthPx').value);
+        document.getElementById('widthMm').value = isNaN(px) ? '' : (px * 25.4 / dpi).toFixed(2);
+      } else {
+        const px = parseFloat(document.getElementById('heightPx').value);
+        document.getElementById('heightMm').value = isNaN(px) ? '' : (px * 25.4 / dpi).toFixed(2);
+      }
+    }
+
+    function updateAll() {
+      mmToPx('width');
+      mmToPx('height');
+      pxToMm('width');
+      pxToMm('height');
+    }
+
+    function clearAll() {
+      document.getElementById('dpi').value = 300;
+      document.getElementById('widthMm').value = '';
+      document.getElementById('widthPx').value = '';
+      document.getElementById('heightMm').value = '';
+      document.getElementById('heightPx').value = '';
+    }
+  </script>
+</body>
+</html>
